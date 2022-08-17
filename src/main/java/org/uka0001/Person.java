@@ -2,17 +2,18 @@ package org.uka0001;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
 
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 public class Person {
-    private final String name;
-    private final int age;
-    private final float salary;
-    private final String position;
-    private final LocalDate dateOfBirth;
+    private String name;
+    private int age;
+    private float salary;
+    private String position;
+    private LocalDate dateOfBirth;
 
 }

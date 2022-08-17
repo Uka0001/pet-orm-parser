@@ -5,21 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46ecb4f1-76b0-4b6e-a082-d6c4448aaca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/MOCK_DATA.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sample.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sample.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/uka0001/AppTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Person.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,31 +88,5 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>22</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>19</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>20</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
