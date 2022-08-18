@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46ecb4f1-76b0-4b6e-a082-d6c4448aaca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/CSVOrm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Person2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/CSVOrm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/CSVOrm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/uka0001/AppTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +29,9 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2DUsBgXGk23YNm8H4R8yvpKjiKf" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -44,6 +43,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/oleksii/Documents/GitHub/pet-orm-parser/src/main/java",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -104,7 +104,7 @@
       <option name="presentableId" value="Default" />
       <updated>1660764864080</updated>
       <workItem from="1660821222479" duration="9679000" />
-      <workItem from="1660836911672" duration="2659000" />
+      <workItem from="1660836911672" duration="11286000" />
     </task>
     <servers />
   </component>
@@ -129,16 +129,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/knubisoft/Main.java</url>
           <line>18</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/CSVOrm.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/CSVOrm.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

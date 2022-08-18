@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 
 public class CSVOrm {
 
-    public static final String DELIMITER = ",";
-    public static final String COMMENT = "--";
+//    public static final String DELIMITER = ",";
+//    public static final String COMMENT = "--";
 
     public static <T> List<T> transform(List<String> lines, Class<T> cls) {
         Map<Integer, String> mapping = buildMapping(lines.get(0));
@@ -24,18 +24,18 @@ public class CSVOrm {
                 .collect(Collectors.toList());
     }
 
-    private static Map<Integer, String> buildMapping(String firstLine) {
-        Map<Integer, String> map = new LinkedHashMap<>();
-        String[] array = splitLine(firstLine);
-        for (int index = 0; index < array.length; index++) {
-            String value = array[index];
-            if (value.contains(COMMENT)) {
-                value = value.split(COMMENT)[0];
-            }
-            map.put(index, value.trim());
-        }
-        return map;
-    }
+//    private static Map<Integer, String> buildMapping(String firstLine) {
+//        Map<Integer, String> map = new LinkedHashMap<>();
+//        String[] array = splitLine(firstLine);
+//        for (int index = 0; index < array.length; index++) {
+//            String value = array[index];
+//            if (value.contains(COMMENT)) {
+//                value = value.split(COMMENT)[0];
+//            }
+//            map.put(index, value.trim());
+//        }
+//        return map;
+//    }
 
     @SneakyThrows
     private static <T> T toType(String line, Class<T> cls, Map<Integer, String> mapping) {
@@ -77,7 +77,7 @@ public class CSVOrm {
         }).apply(value);
     }
 
-    private static String[] splitLine(String line) {
-        return line.split(DELIMITER);
-    }
+//    private static String[] splitLine(String line) {
+//        return line.split(DELIMITER);
+//    }
 }
