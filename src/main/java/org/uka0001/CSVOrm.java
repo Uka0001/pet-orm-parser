@@ -76,6 +76,7 @@ public class CSVOrm {
             throw new UnsupportedOperationException("Type is not supported by parser" + type);
         }).apply(value);
     }
+
     private static String[] splitLine(String line) {
         return line.split(DELIMITER);
     }
