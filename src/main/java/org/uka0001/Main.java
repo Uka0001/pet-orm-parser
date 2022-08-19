@@ -3,21 +3,59 @@ package org.uka0001;
 import lombok.SneakyThrows;
 
 import java.io.File;
-import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URL;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Function;
 
 public class Main {
 
+    private static final ORMInterface ORM = new ORM();
+
+    public static void main(String[] args) throws Exception {
+
+
+
+        withConnection(connection -> {
+            process(connection);
+            return null;
+        });
+    }
+
     @SneakyThrows
-    public static void main(String[] args) throws IOException {
-//        File file = new File("src/main/resources/sample.csv");
-//        List<String> lines = FileUtils.readLines(file, StandardCharsets.UTF_8);
-//        InputStream stream = Main.class.getClassLoader().getResourceAsStream("sample.csv");
-//        List<String> lines = IOUtils.readLines(stream, StandardCharsets.UTF_8);
-//        List<Person> personList = CSVOrm.transform(lines, Person.class);
-//        List<Person2> personList2 = CSVOrm.transform(lines, Person2.class);
-        URL url = Main.class.getClassLoader().getResource("sample.csv");
-        List<Person> result = new ORM().transform(new File(url.toURI()), Person.class);
+    private static void process(Connection connection) {
+        URL url = Main.class.getClassLoader().getResource("sample.json");
+
+        List<Person> result;
+        // result = ORM.readAll(new FileReadWriteSource(new File(url.toURI())), Person.class);
+        // result.add(new Person("WRITE", BigInteger.ZERO, BigInteger.ZERO, "WRITE", LocalDate.now(), 0F));
+        // ORM.writeAll(new ORMInterface.FileReadWriteSource(new File(url.toURI())), result);
+
+        DataReadWriteSource<ResultSet> rw = new ConnectionReadWriteSource(connection, "person");
+        result = ORM.readAll(rw, Person.class);
+        result.add(new Person("WRITE", BigInteger.ZERO, BigInteger.ZERO, "WRITE", LocalDate.now(), 0F));
+        //ORM.writeAll(rw, result);
+    }
+
+    @SneakyThrows
+    private static void withConnection(Function<Connection, Void> function) {
+        try (Connection с = DriverManager.getConnection("jdbc:sqlite:sample.db")) {
+            try (Statement stmt = с.createStatement()) {
+                stmt.executeUpdate("CREATE TABLE IF NOT EXISTS person " +
+                        "(id INTEGER not NULL, " +
+                        " name VARCHAR(255), " +
+                        " position VARCHAR(255), " +
+                        " age INTEGER, " +
+                        " PRIMARY KEY ( id ))");
+
+                stmt.executeUpdate("DELETE FROM person");
+                for (int index = 0; index < 10; index++) {
+                    stmt.executeUpdate("INSERT INTO person (name, position, age) VALUES ('1', '1', 1)");
+                }
+            }
+            function.apply(с);
+        }
     }
 }

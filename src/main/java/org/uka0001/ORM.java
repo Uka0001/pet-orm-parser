@@ -1,118 +1,174 @@
 package org.uka0001;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.math.BigInteger;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.function.Function;
 
+public class ORM implements ORMInterface {
 
-public class ORM {
+    @Override
     @SneakyThrows
-    public <T> List<T> transform(File file, Class<T> cls) {
-        String content = FileUtils.readFileToString(file, StandardCharsets.UTF_8);
-        ContentType contentType = guessContentTypeByContent(content);
-        ParsingStrategy parsingStrategy = createStrategyByContentType(contentType);
-        parsingStrategy.parseToTable(content);
+    public <T> List<T> readAll(DataReadWriteSource<?> inputSource, Class<T> cls) {
+        Table table = convertToTable(inputSource);
+        return convertTableToListOfClasses(table, cls);
     }
 
-    private ParsingStrategy createStrategyByContentType(ContentType contentType) {
-        switch (contentType) {
-            case JSON:
-                return new JSONParsingStrategy();
-            case XML:
-                return new XMLParsingStrategy();
-            case CSV:
-                return new CSVParsingStrategy();
-            default:
-                throw new UnsupportedOperationException("Unknown strategy" + contentType);
-
+    private <T> List<T> convertTableToListOfClasses(Table table, Class<T> cls) {
+        List<T> result = new ArrayList<>();
+        for (int index = 0; index < table.size(); index++) {
+            Map<String, String> row = table.getTableRowByIndex(index);
+            T instance = reflectTableRowToClass(row, cls);
+            result.add(instance);
         }
-        return null;
+        return result;
     }
 
-    private ContentType guessContentTypeByContent(String content) {
-        char firstChar = content.charAt(0);
+    @SneakyThrows
+    private <T> T reflectTableRowToClass(Map<String, String> row, Class<T> cls) {
+        T instance = cls.getDeclaredConstructor().newInstance();
+        for (Field each : cls.getDeclaredFields()) {
+            each.setAccessible(true);
+            String value = row.get(each.getName());
+            if (value != null) {
+                each.set(instance, transformValueToFieldType(each, value));
+            }
+        }
+        return instance;
+    }
 
-        switch (firstChar):{
+    private static Object transformValueToFieldType(Field field, String value) {
+        Map<Class<?>, Function<String, Object>> typeToFunction = new LinkedHashMap<>();
+        typeToFunction.put(String.class, s -> s);
+        typeToFunction.put(int.class, Integer::parseInt);
+        typeToFunction.put(Float.class, Float::parseFloat);
+        typeToFunction.put(LocalDate.class, LocalDate::parse);
+        typeToFunction.put(LocalDateTime.class, LocalDate::parse);
+        typeToFunction.put(Long.class, Long::parseLong);
+        typeToFunction.put(BigInteger.class, BigInteger::new);
+
+        return typeToFunction.getOrDefault(field.getType(), type -> {
+            throw new UnsupportedOperationException("Type is not supported by parser " + type);
+        }).apply(value);
+    }
+
+    private Table convertToTable(DataReadWriteSource dataInputSource) {
+        if (dataInputSource instanceof ConnectionReadWriteSource) {
+            ConnectionReadWriteSource databaseSource = (ConnectionReadWriteSource) dataInputSource;
+            return new DatabaseParsingStrategy().parseToTable(databaseSource);
+        } else if (dataInputSource instanceof FileReadWriteSource) {
+            FileReadWriteSource fileSource = (FileReadWriteSource) dataInputSource;
+            return getStringParsingStrategy(fileSource).parseToTable(fileSource);
+        } else {
+            throw new UnsupportedOperationException("Unknown DataInputSource " + dataInputSource);
+        }
+    }
+
+    private ParsingStrategy<FileReadWriteSource> getStringParsingStrategy(FileReadWriteSource inputSource) {
+        String content = inputSource.getContent();
+        char firstChar = content.charAt(0);
+        switch (firstChar) {
             case '{':
             case '[':
-                return ContentType.JSON;
+                return new JSONParsingStrategy();
             case '<':
-                return ContentType.XML;
+                return new XMLParsingStrategy();
             default:
-                return ContentType.CSV;
+                return new CSVParsingStrategy();
         }
-
-        return null;
     }
 
-    enum ContentType {
-        CSV, XML, JSON
+    interface ParsingStrategy<T extends DataReadWriteSource> {
+        Table parseToTable(T content);
     }
 
-    interface ParsingStrategy {
-        Table parseToTable(String content);
-
-    }
-
-    private class JSONParsingStrategy implements ParsingStrategy {
+    static class XMLParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+        @SneakyThrows
         @Override
-        public Table parseToTable(String content) {
+        public Table parseToTable(FileReadWriteSource content) {
+            XmlMapper mapper = new XmlMapper();
+            JsonNode result = mapper.readTree(content.getContent());
             return null;
         }
     }
 
-    private class XMLParsingStrategy implements ParsingStrategy {
+    static class JSONParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+
+        @SneakyThrows
         @Override
-        public Table parseToTable(String content) {
-            return null;
+        public Table parseToTable(FileReadWriteSource content) {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode tree = mapper.readTree(content.getContent());
+            Map<Integer, Map<String, String>> result = buildTable(tree);
+            return new Table(result);
         }
+
+        private Map<Integer, Map<String, String>> buildTable(JsonNode tree) {
+            Map<Integer, Map<String, String>> map = new LinkedHashMap<>();
+            int index = 0;
+            for (JsonNode each : tree) {
+                Map<String, String> item = buildRow(each);
+                map.put(index, item);
+                index++;
+            }
+            return map;
+        }
+
+        private Map<String, String> buildRow(JsonNode each) {
+            Map<String, String> item = new LinkedHashMap<>();
+            Iterator<Map.Entry<String, JsonNode>> itr = each.fields();
+            while (itr.hasNext()) {
+                Map.Entry<String, JsonNode> next = itr.next();
+                item.put(next.getKey(), next.getValue().textValue());
+            }
+            return item;
+        }
+
     }
 
-    private class CSVParsingStrategy implements ParsingStrategy {
+    static class CSVParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+
         public static final String DELIMITER = ",";
         public static final String COMMENT = "--";
 
         @Override
-        public Table parseToTable(String content) {
-            List<String> lines = Arrays.asList(content.split(System.lineSeparator()));
+        public Table parseToTable(FileReadWriteSource content) {
+            List<String> lines = Arrays.asList(content.getContent().split(System.lineSeparator()));
             Map<Integer, String> mapping = buildMapping(lines.get(0));
-
-            Map<Integer, Map<String, String>> result = buildTable(lines, mapping);
+            Map<Integer, Map<String, String>> result = buildTable(lines.subList(1, lines.size()), mapping);
             return new Table(result);
         }
 
         private Map<Integer, Map<String, String>> buildTable(List<String> lines, Map<Integer, String> mapping) {
             Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
-            for (int index = 1; index < lines.size(); index++) {
+            for (int index = 0; index < lines.size(); index++) {
                 String line = lines.get(index);
-
-                index = getIndex(mapping, result, index, line);
-                Map<String, String> nameToValueMap = buildRaw(mapping, line);
-                result.put(index, nameToValueMap);
-
+                result.put(index, buildRow(mapping, line));
             }
             return result;
         }
 
-        private int getIndex(Map<Integer, String> mapping, Map<Integer, Map<String, String>> result, int index, String line) {
-            Map <String, String> nameToValueMap = new LinkedHashMap<>();
+        private Map<String, String> buildRow(Map<Integer, String> mapping, String line) {
+            Map<String, String> nameToValueMap = new LinkedHashMap<>();
             String[] rowItems = splitLine(line);
-            for (int rowIndex = 0; rowIndex < rowItems.length; index++){
+            for (int rowIndex = 0; rowIndex < rowItems.length; rowIndex++) {
                 String value = rowItems[rowIndex];
                 nameToValueMap.put(mapping.get(rowIndex), value);
             }
-            result.put(index, nameToValueMap);
-            return index;
+            return nameToValueMap;
         }
 
-        private static Map<Integer, String> buildMapping(String firstLine) {
+        private Map<Integer, String> buildMapping(String firstLine) {
             Map<Integer, String> map = new LinkedHashMap<>();
             String[] array = splitLine(firstLine);
             for (int index = 0; index < array.length; index++) {
@@ -130,20 +186,49 @@ public class ORM {
         }
     }
 
-    private Map<String, String> buildRaw(Map<Integer, String> mapping, String line) {
-        return nameToValue;
+    static class DatabaseParsingStrategy implements ParsingStrategy<ConnectionReadWriteSource> {
+
+        @Override
+        public Table parseToTable(ConnectionReadWriteSource content) {
+            ResultSet rs = content.getContent();
+            Map<Integer, Map<String, String>> result = buildTable(rs);
+            return new Table(result);
+        }
+
+        @SneakyThrows
+        private Map<Integer, Map<String, String>> buildTable(ResultSet rs) {
+            ResultSetMetaData metadata = rs.getMetaData();
+
+            Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
+            int rowId = 0;
+            while (rs.next()) {
+                Map<String, String> row = new LinkedHashMap<>();
+                for (int index = 1; index < metadata.getColumnCount(); index++) {
+                    row.put(metadata.getColumnName(index), rs.getString(index));
+                }
+                result.put(rowId, row);
+                rowId++;
+            }
+
+            return result;
+        }
     }
 
     @RequiredArgsConstructor
     static class Table {
+
         private final Map<Integer, Map<String, String>> table;
 
-        public String getCell(int row, String columnName) {
-            Map<String, String> nameToCell = table.get(row);
-            if (nameToCell != null) {
-                return nameToCell.get(columnName);
-            }
-            return null;
+        int size() {
+            return table.size();
         }
+
+        Map<String, String> getTableRowByIndex(int row) {
+            Map<String, String> result = table.get(row);
+            return result == null ? null : new LinkedHashMap<>(result);
+        }
+
     }
+
+
 }

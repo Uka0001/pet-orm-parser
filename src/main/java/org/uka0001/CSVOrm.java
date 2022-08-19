@@ -7,22 +7,20 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class CSVOrm {
 
 //    public static final String DELIMITER = ",";
 //    public static final String COMMENT = "--";
 
-    public static <T> List<T> transform(List<String> lines, Class<T> cls) {
-        Map<Integer, String> mapping = buildMapping(lines.get(0));
-
-        return lines.subList(1, lines.size()).stream().map(line -> toType(line, cls, mapping))
-                .collect(Collectors.toList());
-    }
+//    public static <T> List<T> transform(List<String> lines, Class<T> cls) {
+//        Map<Integer, String> mapping = buildMapping(lines.get(0));
+//
+//        return lines.subList(1, lines.size()).stream().map(line -> toType(line, cls, mapping))
+//                .collect(Collectors.toList());
+//    }
 
 //    private static Map<Integer, String> buildMapping(String firstLine) {
 //        Map<Integer, String> map = new LinkedHashMap<>();
@@ -37,20 +35,9 @@ public class CSVOrm {
 //        return map;
 //    }
 
-    @SneakyThrows
-    private static <T> T toType(String line, Class<T> cls, Map<Integer, String> mapping) {
-        T type = cls.getDeclaredConstructor().newInstance();
 
-        String[] array = splitLine(line);
-        for (int index = 0; index < array.length; index++) {
-            String value = array[index];
-            String fieldName = mapping.get(index);
-            setValueIntoFieldOrThrow(value, fieldName, type);
-        }
-        return type;
-    }
 
-    private static void setValueIntoFieldOrThrow(String value, String fieldName, Object type) {
+    static void setValueIntoFieldOrThrow(String value, String fieldName, Object type) {
         try {
             Field field = type.getClass().getDeclaredField(fieldName);
             field.setAccessible(true);
