@@ -2,10 +2,12 @@ package org.uka0001;
 
 import lombok.SneakyThrows;
 
-import java.io.File;
 import java.math.BigInteger;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
@@ -15,7 +17,6 @@ public class Main {
     private static final ORMInterface ORM = new ORM();
 
     public static void main(String[] args) throws Exception {
-
 
 
         withConnection(connection -> {

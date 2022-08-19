@@ -4,13 +4,9 @@ import javax.tools.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Method;
-import java.math.BigInteger;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.sql.Connection;
-import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 public class CodeGen {
 
@@ -39,7 +35,7 @@ public class CodeGen {
         fileManager.close();
 
         // load the compiled class
-        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[] { parentDirectory.toURI().toURL() });
+        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{parentDirectory.toURI().toURL()});
         Class<?> helloClass = classLoader.loadClass(classname);
 
         // call a method on the loaded class
