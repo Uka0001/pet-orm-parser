@@ -55,6 +55,7 @@ public class Main {
                 for (int index = 0; index < 10; index++) {
                     stmt.executeUpdate("INSERT INTO person (name, position, age) VALUES ('1', '1', 1)");
                 }
+                System.out.println("Connection to bd has done successfully, bd is created.");
             }
             function.apply(с);
         }

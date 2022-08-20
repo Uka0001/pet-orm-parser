@@ -9,4 +9,5 @@ public interface ORMInterface {
     @SneakyThrows
     <T> List<T> readAll(DataReadWriteSource<?> source, Class<T> cls);
 
+
 }

@@ -1,22 +1,22 @@
 package org.uka0001;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.uka0001.parsing_strategy.*;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class ORM implements ORMInterface {
 
+    //Read from table converted to table input source and put it to the list
     @Override
     @SneakyThrows
     public <T> List<T> readAll(DataReadWriteSource<?> inputSource, Class<T> cls) {
@@ -24,6 +24,7 @@ public class ORM implements ORMInterface {
         return convertTableToListOfClasses(table, cls);
     }
 
+    //Convert table row to class and add to result instances
     private <T> List<T> convertTableToListOfClasses(Table table, Class<T> cls) {
         List<T> result = new ArrayList<>();
         for (int index = 0; index < table.size(); index++) {
@@ -34,6 +35,7 @@ public class ORM implements ORMInterface {
         return result;
     }
 
+    //Transform value from Map to instances by getting their class
     @SneakyThrows
     private <T> T reflectTableRowToClass(Map<String, String> row, Class<T> cls) {
         T instance = cls.getDeclaredConstructor().newInstance();
@@ -47,6 +49,7 @@ public class ORM implements ORMInterface {
         return instance;
     }
 
+    // Transform value to field type depended on its field
     private static Object transformValueToFieldType(Field field, String value) {
         Map<Class<?>, Function<String, Object>> typeToFunction = new LinkedHashMap<>();
         typeToFunction.put(String.class, s -> s);
@@ -62,6 +65,7 @@ public class ORM implements ORMInterface {
         }).apply(value);
     }
 
+    //Convert to table dataInputSource if source - database
     private Table convertToTable(DataReadWriteSource dataInputSource) {
         if (dataInputSource instanceof ConnectionReadWriteSource) {
             ConnectionReadWriteSource databaseSource = (ConnectionReadWriteSource) dataInputSource;
@@ -74,6 +78,7 @@ public class ORM implements ORMInterface {
         }
     }
 
+    //Choose strategy for parsing
     private ParsingStrategy<FileReadWriteSource> getStringParsingStrategy(FileReadWriteSource inputSource) {
         String content = inputSource.getContent();
         char firstChar = content.charAt(0);
@@ -88,134 +93,134 @@ public class ORM implements ORMInterface {
         }
     }
 
-    interface ParsingStrategy<T extends DataReadWriteSource> {
-        Table parseToTable(T content);
-    }
+//    interface ParsingStrategy<T extends DataReadWriteSource> {
+//        Table parseToTable(T content);
+//    }
 
-    static class XMLParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
-        @SneakyThrows
-        @Override
-        public Table parseToTable(FileReadWriteSource content) {
-            XmlMapper mapper = new XmlMapper();
-            JsonNode result = mapper.readTree(content.getContent());
-            return null;
-        }
-    }
+//    static class XMLParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+//        @SneakyThrows
+//        @Override
+//        public Table parseToTable(FileReadWriteSource content) {
+//            XmlMapper mapper = new XmlMapper();
+//            JsonNode result = mapper.readTree(content.getContent());
+//            return null;
+//        }
+//    }
 
-    static class JSONParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+//    static class JSONParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+//
+//        @SneakyThrows
+//        @Override
+//        public Table parseToTable(FileReadWriteSource content) {
+//            ObjectMapper mapper = new ObjectMapper();
+//            JsonNode tree = mapper.readTree(content.getContent());
+//            Map<Integer, Map<String, String>> result = buildTable(tree);
+//            return new Table(result);
+//        }
+//
+//        private Map<Integer, Map<String, String>> buildTable(JsonNode tree) {
+//            Map<Integer, Map<String, String>> map = new LinkedHashMap<>();
+//            int index = 0;
+//            for (JsonNode each : tree) {
+//                Map<String, String> item = buildRow(each);
+//                map.put(index, item);
+//                index++;
+//            }
+//            return map;
+//        }
+//
+//        private Map<String, String> buildRow(JsonNode each) {
+//            Map<String, String> item = new LinkedHashMap<>();
+//            Iterator<Map.Entry<String, JsonNode>> itr = each.fields();
+//            while (itr.hasNext()) {
+//                Map.Entry<String, JsonNode> next = itr.next();
+//                item.put(next.getKey(), next.getValue().textValue());
+//            }
+//            return item;
+//        }
+//
+//    }
 
-        @SneakyThrows
-        @Override
-        public Table parseToTable(FileReadWriteSource content) {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode tree = mapper.readTree(content.getContent());
-            Map<Integer, Map<String, String>> result = buildTable(tree);
-            return new Table(result);
-        }
+//    static class CSVParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
+//
+//        public static final String DELIMITER = ",";
+//        public static final String COMMENT = "--";
+//
+//        @Override
+//        public Table parseToTable(FileReadWriteSource content) {
+//            List<String> lines = Arrays.asList(content.getContent().split(System.lineSeparator()));
+//            Map<Integer, String> mapping = buildMapping(lines.get(0));
+//            Map<Integer, Map<String, String>> result = buildTable(lines.subList(1, lines.size()), mapping);
+//            return new Table(result);
+//        }
+//
+//        private Map<Integer, Map<String, String>> buildTable(List<String> lines, Map<Integer, String> mapping) {
+//            Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
+//            for (int index = 0; index < lines.size(); index++) {
+//                String line = lines.get(index);
+//                result.put(index, buildRow(mapping, line));
+//            }
+//            return result;
+//        }
+//
+//        private Map<String, String> buildRow(Map<Integer, String> mapping, String line) {
+//            Map<String, String> nameToValueMap = new LinkedHashMap<>();
+//            String[] rowItems = splitLine(line);
+//            for (int rowIndex = 0; rowIndex < rowItems.length; rowIndex++) {
+//                String value = rowItems[rowIndex];
+//                nameToValueMap.put(mapping.get(rowIndex), value);
+//            }
+//            return nameToValueMap;
+//        }
+//
+//        private Map<Integer, String> buildMapping(String firstLine) {
+//            Map<Integer, String> map = new LinkedHashMap<>();
+//            String[] array = splitLine(firstLine);
+//            for (int index = 0; index < array.length; index++) {
+//                String value = array[index];
+//                if (value.contains(COMMENT)) {
+//                    value = value.split(COMMENT)[0];
+//                }
+//                map.put(index, value.trim());
+//            }
+//            return map;
+//        }
+//
+//        private static String[] splitLine(String line) {
+//            return line.split(DELIMITER);
+//        }
+//    }
 
-        private Map<Integer, Map<String, String>> buildTable(JsonNode tree) {
-            Map<Integer, Map<String, String>> map = new LinkedHashMap<>();
-            int index = 0;
-            for (JsonNode each : tree) {
-                Map<String, String> item = buildRow(each);
-                map.put(index, item);
-                index++;
-            }
-            return map;
-        }
-
-        private Map<String, String> buildRow(JsonNode each) {
-            Map<String, String> item = new LinkedHashMap<>();
-            Iterator<Map.Entry<String, JsonNode>> itr = each.fields();
-            while (itr.hasNext()) {
-                Map.Entry<String, JsonNode> next = itr.next();
-                item.put(next.getKey(), next.getValue().textValue());
-            }
-            return item;
-        }
-
-    }
-
-    static class CSVParsingStrategy implements ParsingStrategy<FileReadWriteSource> {
-
-        public static final String DELIMITER = ",";
-        public static final String COMMENT = "--";
-
-        @Override
-        public Table parseToTable(FileReadWriteSource content) {
-            List<String> lines = Arrays.asList(content.getContent().split(System.lineSeparator()));
-            Map<Integer, String> mapping = buildMapping(lines.get(0));
-            Map<Integer, Map<String, String>> result = buildTable(lines.subList(1, lines.size()), mapping);
-            return new Table(result);
-        }
-
-        private Map<Integer, Map<String, String>> buildTable(List<String> lines, Map<Integer, String> mapping) {
-            Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
-            for (int index = 0; index < lines.size(); index++) {
-                String line = lines.get(index);
-                result.put(index, buildRow(mapping, line));
-            }
-            return result;
-        }
-
-        private Map<String, String> buildRow(Map<Integer, String> mapping, String line) {
-            Map<String, String> nameToValueMap = new LinkedHashMap<>();
-            String[] rowItems = splitLine(line);
-            for (int rowIndex = 0; rowIndex < rowItems.length; rowIndex++) {
-                String value = rowItems[rowIndex];
-                nameToValueMap.put(mapping.get(rowIndex), value);
-            }
-            return nameToValueMap;
-        }
-
-        private Map<Integer, String> buildMapping(String firstLine) {
-            Map<Integer, String> map = new LinkedHashMap<>();
-            String[] array = splitLine(firstLine);
-            for (int index = 0; index < array.length; index++) {
-                String value = array[index];
-                if (value.contains(COMMENT)) {
-                    value = value.split(COMMENT)[0];
-                }
-                map.put(index, value.trim());
-            }
-            return map;
-        }
-
-        private static String[] splitLine(String line) {
-            return line.split(DELIMITER);
-        }
-    }
-
-    static class DatabaseParsingStrategy implements ParsingStrategy<ConnectionReadWriteSource> {
-
-        @Override
-        public Table parseToTable(ConnectionReadWriteSource content) {
-            ResultSet rs = content.getContent();
-            Map<Integer, Map<String, String>> result = buildTable(rs);
-            return new Table(result);
-        }
-
-        @SneakyThrows
-        private Map<Integer, Map<String, String>> buildTable(ResultSet rs) {
-            ResultSetMetaData metadata = rs.getMetaData();
-
-            Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
-            int rowId = 0;
-            while (rs.next()) {
-                Map<String, String> row = new LinkedHashMap<>();
-                for (int index = 1; index < metadata.getColumnCount(); index++) {
-                    row.put(metadata.getColumnName(index), rs.getString(index));
-                }
-                result.put(rowId, row);
-                rowId++;
-            }
-
-            return result;
-        }
-    }
+//    static class DatabaseParsingStrategy implements ParsingStrategy<ConnectionReadWriteSource> {
+//
+//        @Override
+//        public Table parseToTable(ConnectionReadWriteSource content) {
+//            ResultSet rs = content.getContent();
+//            Map<Integer, Map<String, String>> result = buildTable(rs);
+//            return new Table(result);
+//        }
+//
+//        @SneakyThrows
+//        private Map<Integer, Map<String, String>> buildTable(ResultSet rs) {
+//            ResultSetMetaData metadata = rs.getMetaData();
+//
+//            Map<Integer, Map<String, String>> result = new LinkedHashMap<>();
+//            int rowId = 0;
+//            while (rs.next()) {
+//                Map<String, String> row = new LinkedHashMap<>();
+//                for (int index = 1; index < metadata.getColumnCount(); index++) {
+//                    row.put(metadata.getColumnName(index), rs.getString(index));
+//                }
+//                result.put(rowId, row);
+//                rowId++;
+//            }
+//
+//            return result;
+//        }
+//    }
 
     @RequiredArgsConstructor
-    static class Table {
+    public static class Table {
 
         private final Map<Integer, Map<String, String>> table;
 
