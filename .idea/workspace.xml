@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46ecb4f1-76b0-4b6e-a082-d6c4448aaca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sample.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/CSVParsingStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/DatabaseParsingStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/JSONParsingStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/ParsingStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/XMLParsingStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/WriteStrategy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f140abc-d566-45d0-bdaf-b7ccfe581d70.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/CSVWriteStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/ConnectionReadWriteSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/ConnectionReadWriteSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/FileReadWriteSource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/FileReadWriteSource.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/ORMInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/ORMInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,8 +16,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -156,7 +140,7 @@
       <workItem from="1660888793327" duration="671000" />
       <workItem from="1660909081643" duration="3288000" />
       <workItem from="1660917759683" duration="9015000" />
-      <workItem from="1660971715581" duration="12884000" />
+      <workItem from="1660971715581" duration="13560000" />
     </task>
     <servers />
   </component>
@@ -202,17 +186,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java</url>
-          <line>227</line>
+          <line>230</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java</url>
-          <line>231</line>
+          <line>234</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java</url>
-          <line>232</line>
+          <line>235</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -246,7 +230,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java</url>
-          <line>230</line>
+          <line>233</line>
           <properties class="org.uka0001.ORM.Table" method="getTableRowByIndex">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -261,7 +245,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/ORM.java</url>
-          <line>224</line>
+          <line>227</line>
           <properties field="table" class="org.uka0001.ORM.Table" />
           <option name="timeStamp" value="63" />
         </line-breakpoint>
