@@ -1,7 +1,7 @@
 package org.uka0001.parsing_strategy;
 
 import lombok.SneakyThrows;
-import org.uka0001.ConnectionReadWriteSource;
+import org.uka0001.read_write_sourse.ConnectionReadWriteSource;
 import org.uka0001.ORM;
 
 import java.sql.ResultSet;

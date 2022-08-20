@@ -3,6 +3,9 @@ package org.uka0001;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.uka0001.parsing_strategy.*;
+import org.uka0001.read_write_sourse.ConnectionReadWriteSource;
+import org.uka0001.read_write_sourse.DataReadWriteSource;
+import org.uka0001.read_write_sourse.FileReadWriteSource;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;

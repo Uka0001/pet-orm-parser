@@ -3,7 +3,7 @@ package org.uka0001.parsing_strategy;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.SneakyThrows;
-import org.uka0001.FileReadWriteSource;
+import org.uka0001.read_write_sourse.FileReadWriteSource;
 import org.uka0001.ORM;
 
 public class XMLParsingStrategy implements ParsingStrategy<FileReadWriteSource> {

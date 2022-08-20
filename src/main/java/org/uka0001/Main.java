@@ -1,6 +1,9 @@
 package org.uka0001;
 
 import lombok.SneakyThrows;
+import org.uka0001.persons.Person;
+import org.uka0001.read_write_sourse.ConnectionReadWriteSource;
+import org.uka0001.read_write_sourse.DataReadWriteSource;
 
 import java.math.BigInteger;
 import java.net.URL;

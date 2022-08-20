@@ -1,4 +1,4 @@
-package org.uka0001;
+package org.uka0001.read_write_sourse;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package org.uka0001;
+package org.uka0001.persons;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
