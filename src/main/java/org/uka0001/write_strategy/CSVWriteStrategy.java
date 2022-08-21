@@ -7,8 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CSVWriteStrategy implements WriteStrategy {
     File file = null;
@@ -24,8 +26,27 @@ public class CSVWriteStrategy implements WriteStrategy {
     private List<String> convertToListOfHeaderAndData(List<?> list) {
         Class cls = list.get(0).getClass();
         List<Field> fields = Arrays.asList(cls.getDeclaredFields());
-        //TODO
+        List<String> result = new ArrayList<>();
+        result.add(convertToHeader(fields));
+        result.addAll(list.stream().map(item->transform(item, fields)).collect(Collectors.toList()));
+        return result;
+    }
 
-        return null;
+    @SneakyThrows
+    private String transform(Object o, List<Field> fields) {
+        List<String> person = new ArrayList<>();
+        for (Field each: fields){
+            each.setAccessible(true);
+            String s = String.valueOf(each.get(o));
+        }
+        return String.join(",", person);
+    }
+
+    private String convertToHeader(List<Field> fields) {
+        List<String> headers = new ArrayList<>();
+        for (Field each: fields){
+            headers.add(each.getName());
+        }
+        return String.join(",", headers);
     }
 }

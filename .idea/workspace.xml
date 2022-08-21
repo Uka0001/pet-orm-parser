@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46ecb4f1-76b0-4b6e-a082-d6c4448aaca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/CSVWriteStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/CSVWriteStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/CSVWriteStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +140,7 @@
       <workItem from="1660888793327" duration="671000" />
       <workItem from="1660909081643" duration="3288000" />
       <workItem from="1660917759683" duration="9015000" />
-      <workItem from="1660971715581" duration="13560000" />
+      <workItem from="1660971715581" duration="15186000" />
     </task>
     <servers />
   </component>
