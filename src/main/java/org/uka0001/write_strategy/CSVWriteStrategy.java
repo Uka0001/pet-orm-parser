@@ -4,7 +4,6 @@ import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CSVWriteStrategy implements WriteStrategy {
-    File file = null;
+    private File file;
 
     @SneakyThrows
     @Override
@@ -28,14 +27,14 @@ public class CSVWriteStrategy implements WriteStrategy {
         List<Field> fields = Arrays.asList(cls.getDeclaredFields());
         List<String> result = new ArrayList<>();
         result.add(convertToHeader(fields));
-        result.addAll(list.stream().map(item->transform(item, fields)).collect(Collectors.toList()));
+        result.addAll(list.stream().map(item -> transform(item, fields)).collect(Collectors.toList()));
         return result;
     }
 
     @SneakyThrows
     private String transform(Object o, List<Field> fields) {
         List<String> person = new ArrayList<>();
-        for (Field each: fields){
+        for (Field each : fields) {
             each.setAccessible(true);
             String s = String.valueOf(each.get(o));
         }
@@ -44,7 +43,7 @@ public class CSVWriteStrategy implements WriteStrategy {
 
     private String convertToHeader(List<Field> fields) {
         List<String> headers = new ArrayList<>();
-        for (Field each: fields){
+        for (Field each : fields) {
             headers.add(each.getName());
         }
         return String.join(",", headers);
