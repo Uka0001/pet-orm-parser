@@ -1,6 +1,7 @@
 package org.uka0001.parsing_strategy;
 
 import org.uka0001.ORM;
+import org.uka0001.Table;
 import org.uka0001.read_write_sourse.FileReadWriteSource;
 
 import java.util.Arrays;
@@ -14,11 +15,11 @@ public class CSVParsingStrategy implements ParsingStrategy<FileReadWriteSource> 
     public static final String COMMENT = "--";
 
     @Override
-    public ORM.Table parseToTable(FileReadWriteSource content) {
+    public Table parseToTable(FileReadWriteSource content) {
         List<String> lines = Arrays.asList(content.getContent().split(System.lineSeparator()));
         Map<Integer, String> mapping = buildMapping(lines.get(0));
         Map<Integer, Map<String, String>> result = buildTable(lines.subList(1, lines.size()), mapping);
-        return new ORM.Table(result);
+        return new Table(result);
     }
 
     private Map<Integer, Map<String, String>> buildTable(List<String> lines, Map<Integer, String> mapping) {

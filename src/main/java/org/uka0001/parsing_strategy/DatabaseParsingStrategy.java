@@ -2,6 +2,7 @@ package org.uka0001.parsing_strategy;
 
 import lombok.SneakyThrows;
 import org.uka0001.ORM;
+import org.uka0001.Table;
 import org.uka0001.read_write_sourse.ConnectionReadWriteSource;
 
 import java.sql.ResultSet;
@@ -14,10 +15,10 @@ public class DatabaseParsingStrategy implements ParsingStrategy<ConnectionReadWr
 
     //Parsing data from content (database) from ConnectionReadWriteSource
     @Override
-    public ORM.Table parseToTable(ConnectionReadWriteSource content) {
+    public Table parseToTable(ConnectionReadWriteSource content) {
         ResultSet rs = content.getContent();
         Map<Integer, Map<String, String>> result = buildTable(rs);
-        return new ORM.Table(result);
+        return new Table(result);
     }
 
     @SneakyThrows

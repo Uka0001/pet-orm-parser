@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.uka0001.ORM;
+import org.uka0001.Table;
 import org.uka0001.read_write_sourse.FileReadWriteSource;
 
 import java.util.Iterator;
@@ -14,11 +15,11 @@ public class JSONParsingStrategy implements ParsingStrategy<FileReadWriteSource>
 
     @SneakyThrows
     @Override
-    public ORM.Table parseToTable(FileReadWriteSource content) {
+    public Table parseToTable(FileReadWriteSource content) {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode tree = mapper.readTree(content.getContent());
         Map<Integer, Map<String, String>> result = buildTable(tree);
-        return new ORM.Table(result);
+        return new Table(result);
     }
 
     private Map<Integer, Map<String, String>> buildTable(JsonNode tree) {
