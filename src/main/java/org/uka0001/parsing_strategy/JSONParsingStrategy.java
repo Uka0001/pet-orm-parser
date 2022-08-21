@@ -3,7 +3,6 @@ package org.uka0001.parsing_strategy;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.uka0001.ORM;
 import org.uka0001.Table;
 import org.uka0001.read_write_sourse.FileReadWriteSource;
 

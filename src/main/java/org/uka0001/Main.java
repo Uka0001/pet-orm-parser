@@ -7,15 +7,10 @@ import org.uka0001.read_write_sourse.DataReadWriteSource;
 import org.uka0001.read_write_sourse.FileReadWriteSource;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.function.Function;
 
 public class Main {
 
@@ -30,12 +25,12 @@ public class Main {
 
 
         DataReadWriteSource<?> file = new FileReadWriteSource(new File(url4.toURI()));
-        List<Person> list = ORM.readAll(file,Person.class);
+        List<Person> list = ORM.readAll(file, Person.class);
 
         DataReadWriteSource<?> target1 = new FileReadWriteSource(new File(url3.toURI()));
         DataReadWriteSource<?> target2 = new FileReadWriteSource(new File(url2.toURI()));
         DataReadWriteSource<?> target3 = new FileReadWriteSource(new File(url1.toURI()));
-        if (!list.isEmpty()){
+        if (!list.isEmpty()) {
             ORM.writeAll(target1, list);
             ORM.writeAll(target2, list);
             ORM.writeAll(target3, list);
@@ -59,7 +54,7 @@ public class Main {
         result = ORM.readAll(rw, Person.class);
 
         DataReadWriteSource<?> file = new FileReadWriteSource(new File(url5.toURI()));
-        List<Person> list = ORM.readAll(file,Person.class);
+        List<Person> list = ORM.readAll(file, Person.class);
 
         ORM.writeAll(rw, list);
 
@@ -98,4 +93,4 @@ public class Main {
 //            }
 //            function.apply(с);
 //        }
-    }
+}
