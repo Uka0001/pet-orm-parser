@@ -5,22 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46ecb4f1-76b0-4b6e-a082-d6c4448aaca0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/DBService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/write_strategy/DataBaseWriteStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample.db" beforeDir="false" afterPath="$PROJECT_DIR$/sample.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/ORMInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/ORMInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/CSVParsingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/CSVParsingStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/DatabaseParsingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/DatabaseParsingStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/JSONParsingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/JSONParsingStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/ParsingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/ParsingStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/XMLParsingStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/uka0001/parsing_strategy/XMLParsingStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -149,7 +143,7 @@
       <workItem from="1660888793327" duration="671000" />
       <workItem from="1660909081643" duration="3288000" />
       <workItem from="1660917759683" duration="9015000" />
-      <workItem from="1660971715581" duration="20712000" />
+      <workItem from="1660971715581" duration="21961000" />
     </task>
     <servers />
   </component>
@@ -195,17 +189,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>65</line>
+          <line>60</line>
           <option name="timeStamp" value="78" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>56</line>
+          <line>51</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/uka0001/Main.java</url>
-          <line>63</line>
+          <line>58</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
