@@ -69,17 +69,17 @@ public class ORM implements ORMInterface {
     }
 
     //Convert to table dataInputSource if source - database
-    private Table convertToTable(DataReadWriteSource dataInputSource) {
-        if (dataInputSource instanceof ConnectionReadWriteSource) {
-            ConnectionReadWriteSource databaseSource = (ConnectionReadWriteSource) dataInputSource;
-            return new DatabaseParsingStrategy().parseToTable(databaseSource);
-        } else if (dataInputSource instanceof FileReadWriteSource) {
-            FileReadWriteSource fileSource = (FileReadWriteSource) dataInputSource;
-            return getStringParsingStrategy(fileSource).parseToTable(fileSource);
-        } else {
-            throw new UnsupportedOperationException("Unknown DataInputSource " + dataInputSource);
-        }
-    }
+//    private Table convertToTable(DataReadWriteSource  dataInputSource) {
+//        if (dataInputSource instanceof ConnectionReadWriteSource) {
+//            ConnectionReadWriteSource databaseSource = (ConnectionReadWriteSource) dataInputSource;
+//            return new DatabaseParsingStrategy().parseToTable(databaseSource);
+//        } else if (dataInputSource instanceof FileReadWriteSource) {
+//            FileReadWriteSource fileSource = (FileReadWriteSource) dataInputSource;
+//            return getStringParsingStrategy(fileSource).parseToTable(fileSource);
+//        } else {
+//            throw new UnsupportedOperationException("Unknown DataInputSource " + dataInputSource);
+//        }
+//    }
 
     //Choose strategy for parsing
     private ParsingStrategy<FileReadWriteSource> getStringParsingStrategy(FileReadWriteSource inputSource) {
